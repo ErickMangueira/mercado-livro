@@ -1,24 +1,23 @@
 package com.mercadolivro.service
 
-import com.mercadolivro.controller.request.PostCustomerRequest
-import com.mercadolivro.controller.request.PutCustomerRequest
 import com.mercadolivro.enums.CustomerStatus
+import com.mercadolivro.enums.Errors
+import com.mercadolivro.exception.NotFoundException
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.repository.CustomerRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
 
 @Service
 class CustomerService(
     val customerRepository: CustomerRepository,
     val bookService: BookService) {
 
-    fun getAll(name: String?): List<CustomerModel> {
-        name?.let {  return customerRepository.findByNomeContaining(it) }
+    fun getAll(name: String?, pageable: Pageable): Page<CustomerModel> {
+        name?.let {  return customerRepository.findByNomeContaining(it, pageable) }
 
-        return customerRepository.findAll().toList()
+        return customerRepository.findAll(pageable)
     }
 
     fun create( customer : CustomerModel) {
@@ -27,7 +26,7 @@ class CustomerService(
     }
     fun getById(id: Int): CustomerModel {
 
-        return  customerRepository.findById(id).orElseThrow()
+        return  customerRepository.findById(id).orElseThrow{ NotFoundException(Errors.ML1101.message.format(id), Errors.ML1101.code) }
     }
     fun update( customer: CustomerModel) {
         if(!customerRepository.existsById(customer.id!!)){

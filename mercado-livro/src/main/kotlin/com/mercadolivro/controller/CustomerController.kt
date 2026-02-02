@@ -6,6 +6,10 @@ import com.mercadolivro.controller.request.PutCustomerRequest
 import com.mercadolivro.extencion.toCustomerModel
 import com.mercadolivro.extencion.toResponse
 import com.mercadolivro.service.CustomerService
+import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,13 +29,13 @@ class CustomerController(val customerService: CustomerService) {
 
 
     @GetMapping
-    fun getAll(@RequestParam name: String?): List<CustomerResponse> {
-        return customerService.getAll(name).map{ it.toResponse()}
+    fun getAll(@RequestParam name: String?, @PageableDefault(page = 0, size = 10) pageable: Pageable): Page<CustomerResponse> {
+        return customerService.getAll(name, pageable).map{ it.toResponse()}
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody customer : PostCustomerRequest) {
+    fun create(@RequestBody @Valid customer : PostCustomerRequest) {
         customerService.create(customer.toCustomerModel())
     }
 

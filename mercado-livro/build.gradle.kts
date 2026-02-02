@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
 	kotlin("jvm") version "2.2.21"
 	kotlin("plugin.spring") version "2.2.21"
@@ -25,8 +27,9 @@ repositories {
 
 dependencies {
 	// Spring Boot
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-web") // substitui webmvc
+	implementation("org.springframework.boot:spring-boot-starter-web")
 
 	// Kotlin
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -34,6 +37,10 @@ dependencies {
 
 	// MySQL
 	runtimeOnly("mysql:mysql-connector-java:8.0.33")
+	//flyway
+	implementation("org.flywaydb:flyway-core:11.20.2")
+	implementation("org.flywaydb:flyway-mysql:11.20.2")
+
 
 	// Testes
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
