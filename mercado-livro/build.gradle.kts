@@ -1,9 +1,9 @@
 import org.gradle.kotlin.dsl.implementation
 
 plugins {
-	kotlin("jvm") version "2.2.21"
-	kotlin("plugin.spring") version "2.2.21"
-	kotlin("plugin.jpa") version "2.3.0"
+	kotlin("jvm") version "1.9.24"
+	kotlin("plugin.spring") version "1.9.24"
+	kotlin("plugin.jpa") version "1.9.24"
 	id("org.springframework.boot") version "3.2.5"
 	id("io.spring.dependency-management") version "1.1.7"
 }
@@ -36,7 +36,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 	// MySQL
-	runtimeOnly("mysql:mysql-connector-java:8.0.33")
+	runtimeOnly("com.mysql:mysql-connector-j")
+
 	//flyway
 	implementation("org.flywaydb:flyway-core:11.20.2")
 	implementation("org.flywaydb:flyway-mysql:11.20.2")
@@ -46,11 +47,18 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+
+	// Swagger
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+
+
+
 }
 
 kotlin {
 	compilerOptions {
-		freeCompilerArgs.addAll("-Xjsr305=strict", "-Xannotation-default-target=param-property")
+		freeCompilerArgs.addAll("-Xjsr305=strict")
 	}
 }
 
