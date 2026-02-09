@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
+import kotlin.math.E
 
 @ControllerAdvice
 class ControllerAdvice {
@@ -23,6 +24,17 @@ class ControllerAdvice {
         )
         return ResponseEntity(erro, HttpStatus.BAD_REQUEST)
     }
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDeniedException(ex: AccessDeniedException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val erro = ErrorResponse(
+            HttpStatus.FORBIDDEN.value(),
+            Errors.ML0000.message,
+            Errors.ML0000.code,
+            null
+        )
+        return ResponseEntity(erro, HttpStatus.FORBIDDEN)
+    }
+
     @ExceptionHandler(BadRequestException::class)
     fun handleBadRequestException(ex: BadRequestException, request: WebRequest): ResponseEntity<ErrorResponse> {
         val erro = ErrorResponse(

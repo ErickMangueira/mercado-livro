@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
 import org.springframework.data.web.SortDefault
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -34,6 +35,7 @@ class CustomerController(val customerService: CustomerService) {
 
 
     @GetMapping
+    @PreAuthorize("@customerSecurity.isAdmin(authentication)")
     fun getAll(
         @RequestParam(required = false) name: String?,
 
@@ -54,6 +56,8 @@ class CustomerController(val customerService: CustomerService) {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("@customerSecurity.isAdmin(authentication) || " +
+        "@customerSecurity.canAccessCustomer(#id, authentication.name)")
     fun getCustomer(@PathVariable id: Int): CustomerResponse {
        return customerService.getById(id).toResponse()
     }

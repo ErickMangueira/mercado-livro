@@ -15,6 +15,7 @@ data class PurchaseService (
     fun create(purchase: PurchaseModel) {
         purchaseRepository.save(purchase)
 
+
         applicationEventPublisher.publishEvent(PurchaseEvent(purchase, this))
     }
     fun update(purchase: PurchaseModel) {
