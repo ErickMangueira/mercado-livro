@@ -41,6 +41,7 @@ class SecurityConfig(
         "/v3/api-docs",
         "/v3/api-docs/**"
     )
+    private val PUBLIC_GET_MATCHERS = arrayOf("/books/**")
 
 
     @Bean
@@ -55,6 +56,7 @@ class SecurityConfig(
                 it.requestMatchers(*SWAGGER_MATCHERS).permitAll()
                 it.requestMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll()
                 it.requestMatchers( *ADMIN_MATCHERS).hasRole("ADMIN")
+                it.requestMatchers(HttpMethod.GET, *PUBLIC_GET_MATCHERS).permitAll()
                 it.anyRequest().authenticated()
             }
             .addFilterBefore(
