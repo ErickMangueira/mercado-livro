@@ -6,6 +6,7 @@ plugins {
 	kotlin("plugin.jpa") version "1.9.24"
 	id("org.springframework.boot") version "3.2.5"
 	id("io.spring.dependency-management") version "1.1.7"
+	jacoco
 }
 
 group = "com.mercadolivro"
@@ -48,6 +49,8 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	testImplementation("io.mockk:mockk:1.14.9")
+	testImplementation("org.springframework.security:spring-security-test:7.0.2")
 
 
 	// Swagger

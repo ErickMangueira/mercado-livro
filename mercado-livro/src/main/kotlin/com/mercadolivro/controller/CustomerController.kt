@@ -70,7 +70,7 @@ class CustomerController(
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: Int, @RequestBody customerRequest: PutCustomerRequest) {
+    fun delete(@PathVariable id: Int) {
         customerService.delete(id)
     }
 

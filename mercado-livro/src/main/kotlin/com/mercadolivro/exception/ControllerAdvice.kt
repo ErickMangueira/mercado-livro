@@ -22,7 +22,7 @@ class ControllerAdvice {
             ex.errorCode,
             null
         )
-        return ResponseEntity(erro, HttpStatus.BAD_REQUEST)
+        return ResponseEntity(erro, HttpStatus.NOT_FOUND)
     }
     @ExceptionHandler(AccessDeniedException::class)
     fun handleAccessDeniedException(ex: AccessDeniedException, request: WebRequest): ResponseEntity<ErrorResponse> {
